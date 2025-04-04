@@ -155,10 +155,11 @@ pub fn decode_symbol_codes(
             }
             state.repeat_info.repeat_cmd = code_len;
             let step = code_len - 14;
-            let mut new_repeat = bit_reader.read_bits(1)?;
-            for _ in 0..step - 1 {
-                new_repeat = (new_repeat << 1) | bit_reader.read_bits(1)?;
-            }
+            // let mut new_repeat = bit_reader.read_bits(1)?;
+            // for _ in 0..step - 1 {
+            //     new_repeat = (new_repeat << 1) | bit_reader.read_bits(1)?;
+            // }
+            let mut new_repeat = bit_reader.read_bits(step as u8)?;
             // println!("{} {}", code_len, new_repeat);
             new_repeat += 3;
 
@@ -221,7 +222,8 @@ pub fn decode_alphabet_code(
             Ok(s) => s,
             Err(_) => break,
         };
-        println!("symbol: {}", symbol);
+        // println!("symbol: {}", symbol);
+        print!("{}", symbol as u8 as char);
     }
     // println!("{}", bit_reader.remaining_bits());
     Ok(())
